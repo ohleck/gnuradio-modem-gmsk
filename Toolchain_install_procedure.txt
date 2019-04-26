@@ -37,7 +37,7 @@ pybombs install gr-satellites
 pybombs isntall gr-correctiq
 
 
-# PlutoSDR drivers install
+# PlutoSDR modules installation
 # Udev rules for plutoSDR (running without sudo)
 wget https://wiki.analog.com/_media/university/tools/pluto/drivers/plutosdr-m2k-udev_1.0_amd64.deb
 sudo dpkg -i plutosdr-m2k-udev_1.0_amd64.deb
@@ -46,16 +46,57 @@ rm plutosdr-m2k-udev_1.0_amd64.deb
 
 
 
+# Ettus USRP SDR modules installation
+# https://kb.ettus.com/Building_and_Installing_the_USRP_Open-Source_Toolchain_(UHD_and_GNU_Radio)_on_Linux
+
+sudo apt update
+sudo apt-get -y install git swig cmake doxygen build-essential libboost-all-dev libtool libusb-1.0-0 libusb-1.0-0-dev libudev-dev libncurses5-dev libfftw3-bin libfftw3-dev libfftw3-doc libcppunit-1.14-0 libcppunit-dev libcppunit-doc ncurses-bin cpufrequtils python-numpy python-numpy-doc python-numpy-dbg python-scipy python-docutils qt4-bin-dbg qt4-default qt4-doc libqt4-dev libqt4-dev-bin python-qt4 python-qt4-dbg python-qt4-dev python-qt4-doc python-qt4-doc libqwt6abi1 libfftw3-bin libfftw3-dev libfftw3-doc ncurses-bin libncurses5 libncurses5-dev libncurses6-dbg libfontconfig1-dev libxrender-dev libpulse-dev swig g++ automake autoconf libtool python-dev libfftw3-dev libcppunit-dev libboost-all-dev libusb-dev libusb-1.0-0-dev fort77 libsdl1.2-dev python-wxgtk3.0 git libqt4-dev python-numpy ccache python-opengl libgsl-dev python-cheetah python-mako python-lxml doxygen qt4-default qt4-dev-tools libusb-1.0-0-dev libqwtplot3d-qt5-dev pyqt4-dev-tools python-qwt5-qt4 cmake git wget libxi-dev gtk2-engines-pixbuf r-base-dev python-tk liborc-0.4-0 liborc-0.4-dev libasound2-dev python-gtk2 libzmq3-dev libzmq5 python-requests python-sphinx libcomedi-dev python-zmq libqwt-dev libqwt6abi1 python-six libgps-dev libgps23 gpsd gpsd-clients python-gps python-setuptools
+
+cd ~/code
+mkdir workarea-uhd
+cd workarea-uhd
+cd uhd
+git checkout v3.14.0.0
+cd host
+mkdir build
+cd build
+cmake ../
+make
+make test
+# install UHD, using the default install prefix, which will install UHD under the /usr/local/lib
+sudo make install
+sudo ldconfig
+
+#Test
+source ~/.bashrc # or restart terminal
+uhd_find_devices  #Expected output: [INFO] [UHD] linux; ... No UHD Devices Found
+
+sudo uhd_images_downloader
+
+# set USB devices for non-root access
+# without any ettus connected devices during the steps!
+cd ~/code/workarea-uhd/uhd/host/utils
+sudo cp uhd-usrp.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
+# Configuring Ethernet - For USRP devices that use Ethernet to connect to the host compute
+# Set a static IP address for your system of 192.168.10.1, with a netmask of 255.255.255.0. The default IP address of the USRP is 192.168.10.2.
+
+# Allow non-root process run to increase thread priority - OPTIONAL
+sudo groupadd usrp
+sudo usermod -aG usrp $USER
+echo "@usrp - rtprio  99" | sudo tee -a /etc/security/limits.conf
+
+
+# Integration with above GNURadio install
+~/code/gnuradio/default/lib/uhd/utils/uhd_images_downloader.py
 
 
 
+--------------------------------------------------------------------
 # Misc / outdated. Check if needed. 
-# sudo apt install libiio-utils
-
-#sudo apt isntall zypper
-# gnuradio dependencies
-sudo apt-get -y install gnuradio-dev libxml2 libxml2-dev bison flex cmake git libaio-dev libboost-all-dev swig
-
+# Pluto Install 
 cd ~/code
 git clone https://github.com/analogdevicesinc/libiio.git
 cd libiio
