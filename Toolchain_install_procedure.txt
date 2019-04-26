@@ -2,6 +2,7 @@
 
 # GNURadio Installation procedure:
 # https://github.com/gnuradio/gnuradio
+# Tested on Ubuntu 19.04 x64
 
 sudo apt update
 sudo apt install zlib1g-dev
@@ -21,45 +22,63 @@ pybombs prefix init ~/code/gnuradio/default/
 pybombs install gnuradio
 
 # To run GNURadio
-# source ~/code/gnuradio/default/setup_env.sh
-# gnuradio-companion
+source ~/code/gnuradio/default/setup_env.sh
+gnuradio-companion
 # or (without changing the current environment)
-pybombs run gnuradio-companion
+# pybombs run gnuradio-companion
 
 
-# GR-Satellites Install
 
-# Dependency: libfec
+# Extra modules installation
 cd ~/code
-git clone https://github.com/daniestevez/libfec.git
-cd libfec
-./configure
-make
-sudo make install
+source ~/code/gnuradio/default/setup_env.sh
+pybombs install gr-iio # for PlutoSDR
+pybombs install gr-satellites
+pybombs isntall gr-correctiq
 
-# PY construct and requests.
-pip install construct
-pip install requests==2.7.0
 
+# PlutoSDR drivers install
+# Udev rules for plutoSDR (running without sudo)
+wget https://wiki.analog.com/_media/university/tools/pluto/drivers/plutosdr-m2k-udev_1.0_amd64.deb
+sudo dpkg -i plutosdr-m2k-udev_1.0_amd64.deb
+sudo service udev restart
+rm plutosdr-m2k-udev_1.0_amd64.deb
+
+
+
+
+
+
+# Misc / outdated. Check if needed. 
+# sudo apt install libiio-utils
+
+#sudo apt isntall zypper
+# gnuradio dependencies
+sudo apt-get -y install gnuradio-dev libxml2 libxml2-dev bison flex cmake git libaio-dev libboost-all-dev swig
 
 cd ~/code
-git clone https://github.com/daniestevez/gr-satellites.git
-cd gr-satellites
-mkdir build
-cd build
-cmake ..
-make
+git clone https://github.com/analogdevicesinc/libiio.git
+cd libiio
+cmake .
+make 
 sudo make install
+cd ..
+
+cd ~/code
+git clone https://github.com/analogdevicesinc/libad9361-iio.git
+cd libad9361-iio
+cmake .
+make 
+sudo make install
+cd ..
+
+cd ~/code
+git clone https://github.com/analogdevicesinc/gr-iio.git
+cd gr-iio
+cmake .
+make 
+sudo make install
+cd ..
 sudo ldconfig
-
-
-
-
-
-
-
-
-
-
 
 
