@@ -1,0 +1,65 @@
+
+
+# GNURadio Installation procedure:
+# https://github.com/gnuradio/gnuradio
+
+sudo apt update
+sudo apt install zlib1g-dev
+
+mkdir ~/code
+cd ~/code
+git clone https://github.com/gnuradio/pybombs.git
+cd pybombs
+sudo python setup.py install
+
+pybombs recipes add gr-recipes git+https://github.com/gnuradio/gr-recipes.git  
+pybombs recipes add gr-etcetera git+https://github.com/gnuradio/gr-etcetera.git
+
+mkdir ~/code/gnuradio
+cd ~/code/gnuradio
+pybombs prefix init ~/code/gnuradio/default/
+pybombs install gnuradio
+
+# To run GNURadio
+# source ~/code/gnuradio/default/setup_env.sh
+# gnuradio-companion
+# or (without changing the current environment)
+pybombs run gnuradio-companion
+
+
+# GR-Satellites Install
+
+# Dependency: libfec
+cd ~/code
+git clone https://github.com/daniestevez/libfec.git
+cd libfec
+./configure
+make
+sudo make install
+
+# PY construct and requests.
+pip install construct
+pip install requests==2.7.0
+
+
+cd ~/code
+git clone https://github.com/daniestevez/gr-satellites.git
+cd gr-satellites
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+sudo ldconfig
+
+
+
+
+
+
+
+
+
+
+
+
