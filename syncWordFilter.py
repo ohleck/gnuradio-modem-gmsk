@@ -8,8 +8,10 @@ import socket, argparse, datetime, sys
 # Use with -display_compact to supress extra messages and be able to pipe directly to another module.
 
 # Usage:
-# ./syncWordStreamFilter.py -ip localhost -port 7000 -syncWord 0x53 -packet_length 4 -display_time
-#
+# ./syncWordStreamFilter.py -ip localhost -port 7000 -syncWord 0x7E8CB0 -packet_length 10 -display_time
+# ./syncWordStreamFilter.py -ip localhost -port 7000 -syncWord 0x7E8CB0 -packet_length 280 -display_compact > sampleTTC.bin
+
+
 # Optional: -verbose -display_time -display_compact
 # use '| more' to control the verbose output
 # 

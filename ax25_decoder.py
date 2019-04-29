@@ -10,7 +10,10 @@ import time
 
 
 while True:
-    inBuffer = sys.stdin.read(2)
+    inBuffer1 = sys.stdin.read(1)
+    inBuffer2 = sys.stdin.read(1)
+
+
+byte 
 
     print "Just read:", inBuffer
-    
