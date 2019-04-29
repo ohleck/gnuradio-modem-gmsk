@@ -40,7 +40,7 @@ from gnuradio import qtgui
 
 class gmsk_rx_v1(gr.top_block, Qt.QWidget):
 
-    def __init__(self, default_bandwidth=20e3, default_baud=9600, default_bin_file_sink="/tmp/rx_data.bin", default_dev=4950/2, default_freq=436750000, default_gain=16, default_ip='127.0.0.1', default_port=7000, default_samp=1920000, sdr_dev="rtl=0"):
+    def __init__(self, default_bandwidth=20e3, default_baud=9600, default_bin_file_sink="/tmp/rx_data.bin", default_dev=4950/2, default_freq=435750000, default_gain=16, default_ip='127.0.0.1', default_port=7000, default_samp=1920000, sdr_dev="rtl=0"):
         gr.top_block.__init__(self, "GMSK Receiver (GFSK based)")
         Qt.QWidget.__init__(self)
         self.setWindowTitle("GMSK Receiver (GFSK based)")
@@ -1102,7 +1102,7 @@ def argument_parser():
         "-j", "--default-dev", dest="default_dev", type="eng_float", default=eng_notation.num_to_str(4950/2),
         help="Set Input [default=%default]")
     parser.add_option(
-        "-f", "--default-freq", dest="default_freq", type="intx", default=436750000,
+        "-f", "--default-freq", dest="default_freq", type="intx", default=435750000,
         help="Set default_freq [default=%default]")
     parser.add_option(
         "-g", "--default-gain", dest="default_gain", type="eng_float", default=eng_notation.num_to_str(16),
