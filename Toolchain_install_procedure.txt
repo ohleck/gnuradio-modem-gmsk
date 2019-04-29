@@ -36,7 +36,9 @@ cd ~/code
 source ~/code/gnuradio/default/setup_env.sh
 pybombs install gr-iio # for PlutoSDR
 pybombs install gr-satellites
-pybombs isntall gr-correctiq
+pybombs install gr-correctiq
+#pybombs install gr-osmosdr
+#pybombs install gr-fcdproplus
 
 
 # PlutoSDR modules installation
