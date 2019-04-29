@@ -1,6 +1,12 @@
 #!/usr/bin/python2.7
 import socket, argparse, datetime, sys
 
+# Purpose: connects to a TCP port streaming binary data (usually from a GNURadio decode flow),
+# and search for a given pattern (syncWord) in the bit level. After matching a sync word, 
+# forwards to the standard output a slice of N bytes (patcket_length), in ASCII coded format (regular text processing).
+
+# Use with -display_compact to supress extra messages and be able to pipe directly to another module.
+
 # Usage:
 # ./syncWordStreamFilter.py -ip localhost -port 7000 -syncWord 0x53 -packet_length 4 -display_time
 #
