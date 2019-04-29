@@ -6,6 +6,8 @@
 
 sudo apt update
 sudo apt install zlib1g-dev
+sudo apt install python-pip
+pip install setuptools
 
 mkdir ~/code
 cd ~/code
@@ -55,6 +57,7 @@ sudo apt-get -y install git swig cmake doxygen build-essential libboost-all-dev 
 cd ~/code
 mkdir workarea-uhd
 cd workarea-uhd
+git clone https://github.com/EttusResearch/uhd
 cd uhd
 git checkout v3.14.0.0
 cd host
